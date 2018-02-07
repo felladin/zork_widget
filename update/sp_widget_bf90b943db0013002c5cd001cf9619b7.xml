@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function() {  /* widget controller */  var c = this;}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>body {&#13;
+  margin: 0;&#13;
+  overflow: hidden;&#13;
+  background: black;&#13;
+  color: white;&#13;
+  width: 640px;&#13;
+  height: 480px;&#13;
+  margin: 0 auto;&#13;
+  font-family: monospace;&#13;
+  font-weight: bold;&#13;
+  font-size: 16px;&#13;
+  position: relative;&#13;
+}&#13;
+&#13;
+#grue{&#13;
+  position: relative;&#13;
+}&#13;
+&#13;
+#grue-main {    &#13;
+  position: absolute;&#13;
+  font-weight: bold;&#13;
+  bottom: 0;&#13;
+}&#13;
+&#13;
+p {&#13;
+  margin: 0;&#13;
+}&#13;
+&#13;
+ul {&#13;
+  list-style: none;&#13;
+  margin: 0;&#13;
+  padding: 0;&#13;
+  width: 100%;&#13;
+  display: flex;&#13;
+  justify-content: space-around;  &#13;
+}&#13;
+&#13;
+li {&#13;
+  display: inline-block;&#13;
+}&#13;
+&#13;
+#grue-head {&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  background: #999;&#13;
+  color: white;&#13;
+  padding: 2px 10px;&#13;
+  position: fixed;  &#13;
+  width: 640px;&#13;
+  z-index: 10;&#13;
+}&#13;
+&#13;
+.area,&#13;
+.info {&#13;
+  display: inline-flex;&#13;
+  align-items: center;&#13;
+  width: 50%;&#13;
+  height: 100%;&#13;
+}&#13;
+&#13;
+.line-active .cursor {  &#13;
+  animation: blink 0.5s infinite;&#13;
+}&#13;
+&#13;
+@keyframes blink {&#13;
+  to { opacity: 0; }&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>zork-01</id>
+        <internal>false</internal>
+        <link/>
+        <name>Zork ticket adventure</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {  /* populate the 'data' object */  /* e.g., data.table = $sp.getValue('table'); */})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-02-07 14:18:49</sys_created_on>
+        <sys_id>bf90b943db0013002c5cd001cf9619b7</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Zork ticket adventure</sys_name>
+        <sys_package display_value="SP Zork" source="x_73933_sp_zork">91303943db0013002c5cd001cf9619f8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SP Zork">91303943db0013002c5cd001cf9619f8</sys_scope>
+        <sys_update_name>sp_widget_bf90b943db0013002c5cd001cf9619b7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-02-07 14:19:34</sys_updated_on>
+        <template><![CDATA[<div>
+  <script>
+    $(function() {
+      'use strict'
+
+      function parse(text, $line) {
+        if (text === 'open mailbox') {      
+          $line.append('<p>Opening the small mailbox reveals a leaflet.</p><br>')      
+        } else if (text === 'read leaflet') {
+          let score = +$('#score').text()
+          $('#score').text(++score)
+          $line.append(`<p>
+(Taken)<br>
+"WELCOME TO ZORK!<br>
+<br>
+ZORK is a game of adventure, danger, and low cunning. In it you will explore
+some of the most amazing territory ever seen by mortals. No computer should be without one!"
+    </p><br>`)
+        }
+      }
+
+      function updateMoves() {
+        let moves = +$('#moves').text()
+        $('#moves').text(++moves)
+      }
+
+      $('body').on('keydown', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+
+        let $lineActive = $('.line-active')
+        let $activeInput = $lineActive.find('#userInput')
+
+        let char = String.fromCharCode(e.which).toLowerCase()
+        let text = $activeInput.text()
+
+        // a-z A-Z 0-9 _
+        if (/\w/.test(char)) {      
+          $activeInput.text(text + char)
+        }
+
+        // backspace
+        else if (e.which === 8) {
+          let arr = text.split('')
+          arr.splice(-1, 1)
+          $activeInput.text(arr.join(''))
+        }
+
+        // enter
+        else if (e.which === 13) {      
+          let $line = $('.line-active').clone()
+          $lineActive.before($line)
+          $line.removeClass('line-active')
+          $line.find('.cursor').remove()
+          $('.line-active').find('#userInput').text('')      
+          parse(text, $line)
+          updateMoves()      
+        }
+
+        // space
+        else if (e.which === 32) {
+          $activeInput.text(text + ' ')
+        }
+
+        // debug
+        else {      
+          $activeInput.text(text + e.which)
+        }
+      })
+    });
+  </script>
+  <div id="grue-head">
+    <div class="area">
+      West of House
+    </div>
+    <div class="info">
+      <ul>
+        <li>Score: <span id="score">0</span></li>
+        <li>Moves: <span id="moves">0</span></li>
+      </ul>
+    </div>
+  </div>
+  <div id="grue">
+    <!--<div id="grue-main"> -->
+      <!-- opening text -->
+      <p>ZORK I: The Great Underground Empire</p>
+      <p>Copyright (c) 1981, 1982, 1983 Infocom, Inc. All rights reserved.</p>
+      <p>ZORK is a registered trademark of Infocom, Inc.</p>
+      <p>Revision 88 / Serial number 840726</p>
+      <br>
+      <p>West of House</p>
+      <p>You are standing in an open field west of a white house, with a boarded front door.</p>
+      <p>There is a small mailbox here.</p>
+      <br>
+      <p>Available commands: open mailbox, read leaflet</p>
+      <br>
+      <p class="line line-active"><span id="prompt">&gt;</span><span id="userInput"></span><span class="cursor">&lowbar;</span></p>  
+    <!-- </div> -->
+  </div>
+</div>]]></template>
+    </sp_widget>
+</record_update>
