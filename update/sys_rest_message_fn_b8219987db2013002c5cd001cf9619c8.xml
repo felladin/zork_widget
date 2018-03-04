@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_rest_message_fn">
+    <sys_rest_message_fn action="INSERT_OR_UPDATE">
+        <authentication_type>inherit_from_parent</authentication_type>
+        <basic_auth_password/>
+        <basic_auth_profile/>
+        <basic_auth_user/>
+        <content/>
+        <function_name>npc</function_name>
+        <http_method>get</http_method>
+        <lock>false</lock>
+        <oauth2_profile/>
+        <protocol_name/>
+        <qualified_name>HeroMuster_data [ npc ]</qualified_name>
+        <rest_endpoint>https://openlegend.heromuster.com/api/npc/${npc_level}</rest_endpoint>
+        <rest_message display_value="HeroMuster_data">f7a01587db2013002c5cd001cf961933</rest_message>
+        <sys_class_name>sys_rest_message_fn</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-03-04 08:33:08</sys_created_on>
+        <sys_id>b8219987db2013002c5cd001cf9619c8</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>npc</sys_name>
+        <sys_package display_value="SP Zork" source="x_73933_sp_zork">91303943db0013002c5cd001cf9619f8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SP Zork">91303943db0013002c5cd001cf9619f8</sys_scope>
+        <sys_update_name>sys_rest_message_fn_b8219987db2013002c5cd001cf9619c8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-03-04 08:40:22</sys_updated_on>
+        <use_basic_auth>false</use_basic_auth>
+        <use_mid_server/>
+        <use_mutual_auth>false</use_mutual_auth>
+    </sys_rest_message_fn>
+</record_update>

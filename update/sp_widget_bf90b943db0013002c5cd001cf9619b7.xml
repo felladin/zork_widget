@@ -84,20 +84,57 @@ li {&#13;
         <option_schema/>
         <public>false</public>
         <roles/>
-        <script><![CDATA[(function() {  /* populate the 'data' object */  /* e.g., data.table = $sp.getValue('table'); */})();]]></script>
+        <script><![CDATA[(function() {  /* populate the 'data' object */
+	/* e.g., data.table = $sp.getValue('table'); */
+	var js = new global.JSON();
+	var npc = newNpc(7);
+
+	npc = js.decode(npc);
+	var all = js.encode(npc);
+	gs.info(all);
+
+	var health = npc.success.hp;
+	var name = npc.name;
+	var skill = npc.bane;
+
+	gs.info('You are facing a '+name+' with hp '+health+' using the skill '+skill);
+
+	
+	
+	
+	
+})();
+
+function newNpc(level){
+	try { 
+		var r = new sn_ws.RESTMessageV2('x_73933_sp_zork.HeroMuster_data', 'npc');
+		r.setStringParameterNoEscape('npc_level', level);
+
+		var response = r.execute();
+		var responseBody = response.getBody();
+		var httpStatus = response.getStatusCode();
+
+		return responseBody;
+
+	}
+	catch(ex) {
+		var message = ex.getMessage();
+	}
+}
+]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-02-07 14:18:49</sys_created_on>
         <sys_id>bf90b943db0013002c5cd001cf9619b7</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>7</sys_mod_count>
         <sys_name>Zork ticket adventure</sys_name>
         <sys_package display_value="SP Zork" source="x_73933_sp_zork">91303943db0013002c5cd001cf9619f8</sys_package>
         <sys_policy/>
         <sys_scope display_value="SP Zork">91303943db0013002c5cd001cf9619f8</sys_scope>
         <sys_update_name>sp_widget_bf90b943db0013002c5cd001cf9619b7</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-02-07 14:19:34</sys_updated_on>
+        <sys_updated_on>2018-03-04 09:51:42</sys_updated_on>
         <template><![CDATA[<div>
   <script>
     $(function() {
